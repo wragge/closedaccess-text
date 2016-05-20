@@ -52,7 +52,7 @@ def get_titles(reason=None, series=None, year=None, clean=False):
     file_title = 'titles'
     if reason:
         query['reasons'] = reason
-        file_title = '{}-{}'.format(file_title, reason.lower().replace(' ', '-'))
+        file_title = '{}-{}'.format(file_title, reason.lower().replace(' ', '-').replace('(', '-').replace(')', '-'))
     if series:
         query['series'] = series
         file_title = '{}-{}'.format(file_title, series)
@@ -61,6 +61,7 @@ def get_titles(reason=None, series=None, year=None, clean=False):
         file_title = '{}-{}'.format(file_title, year)
     if clean:
         file_title += '-cleaned'
+    file_title = file_title.replace('--', '-')
     records = db.items.find(query).sort([['contents_dates.start_date.date', -1]])
     with open(os.path.join(data_dir, '{}.txt'.format(file_title)), 'wb') as titles:
         for record in records:
