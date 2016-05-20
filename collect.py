@@ -52,7 +52,7 @@ def get_titles(reason=None, series=None, year=None, clean=False):
     file_title = 'titles'
     if reason:
         query['reasons'] = reason
-        file_title = '{}-{}'.format(file_title, reason)
+        file_title = '{}-{}'.format(file_title, reason.lower().replace(' ', '-'))
     if series:
         query['series'] = series
         file_title = '{}-{}'.format(file_title, series)
